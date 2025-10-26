@@ -1,7 +1,7 @@
 ```@meta
-CurrentModule = KIMJulia
+CurrentModule = KIM_API
 DocTestSetup = quote
-    using KIMJulia
+    using KIM_API
 end
 ```
 
@@ -10,7 +10,7 @@ end
 Low-level wrappers for constructing, configuring, and executing KIM-API models.
 
 ```@autodocs
-Modules = [KIMJulia]
+Modules = [KIM_API]
 Pages = ["model.jl"]
 Private = true
 Order = [:type, :function, :macro]

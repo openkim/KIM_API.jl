@@ -1,16 +1,16 @@
 using Test
-using KIMJulia
+using KIM_API
 using StaticArrays
 using LinearAlgebra
 
-# Test suite for KIMJulia.jl
+# Test suite for KIM_API.jl
 
-@testset "KIMJulia.jl Test Suite" begin
+@testset "KIM_API.jl Test Suite" begin
 
     # Only run integration tests if KIM-API library is available
     kim_available = try
         # Try to load the library to check if KIM-API is properly installed
-        KIMJulia.libkim
+        KIM_API.libkim
         true
     catch e
         println("Warning: KIM-API library not available. Skipping integration tests.")

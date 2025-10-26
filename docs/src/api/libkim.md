@@ -1,7 +1,7 @@
 ```@meta
-CurrentModule = KIMJulia
+CurrentModule = KIM_API
 DocTestSetup = quote
-    using KIMJulia
+    using KIM_API
 end
 ```
 
@@ -10,7 +10,7 @@ end
 Utilities responsible for locating and loading the KIM-API shared library.
 
 ```@autodocs
-Modules = [KIMJulia]
+Modules = [KIM_API]
 Pages = ["libkim.jl"]
 Private = true
 Order = [:function]

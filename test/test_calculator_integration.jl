@@ -9,7 +9,7 @@ using AtomsCalculators
     model_name = "SW_StillingerWeber_1985_Si__MO_405512056662_006"
 
     try
-        calc = KIMJulia.KIMCalculator(model_name)
+        calc = KIM_API.KIMCalculator(model_name)
 
         species = ["Si", "Si"]
         positions = [SVector(0.0, 0.0, 0.0), SVector(2.35, 0.0, 0.0)]
@@ -55,19 +55,19 @@ using AtomsCalculators
             end
 
             if molly_available
-                ext = Base.get_extension(KIMJulia, :KIMJuliaMollyExt)
+                ext = Base.get_extension(KIM_API, :KIM_APIMollyExt)
                 @test ext !== nothing
 
                 has_forces! = any(
                     m -> m.sig <:
-                        Tuple{typeof(AtomsCalculators.forces!), Any, Molly.System, KIMJulia.KIMCalculator},
+                        Tuple{typeof(AtomsCalculators.forces!), Any, Molly.System, KIM_API.KIMCalculator},
                     methods(AtomsCalculators.forces!),
                 )
                 @test has_forces!
 
                 has_energy = any(
                     m -> m.sig <:
-                        Tuple{typeof(AtomsCalculators.potential_energy), Molly.System, KIMJulia.KIMCalculator},
+                        Tuple{typeof(AtomsCalculators.potential_energy), Molly.System, KIM_API.KIMCalculator},
                     methods(AtomsCalculators.potential_energy),
                 )
                 @test has_energy

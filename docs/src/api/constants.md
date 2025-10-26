@@ -1,7 +1,7 @@
 ```@meta
-CurrentModule = KIMJulia
+CurrentModule = KIM_API
 DocTestSetup = quote
-    using KIMJulia
+    using KIM_API
 end
 ```
 
@@ -10,7 +10,7 @@ end
 Enumerations and helpers mirroring the KIM-API constant definitions and unit styles.
 
 ```@autodocs
-Modules = [KIMJulia]
+Modules = [KIM_API]
 Pages = ["constants.jl"]
 Private = true
 Order = [:type, :constant, :function]

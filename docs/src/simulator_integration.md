@@ -1,19 +1,19 @@
 # Adding KIM Support to Your Simulator
 
-This guide provides step-by-step instructions for integrating KIMJulia.jl into your Julia-based molecular dynamics simulator or computational physics code.
+This guide provides step-by-step instructions for integrating KIM_API.jl into your Julia-based molecular dynamics simulator or computational physics code.
 
 ## Overview
 
-KIMJulia.jl provides a high-level interface that makes it easy to add support for hundreds of validated interatomic models to your simulator. The integration requires minimal code changes and follows Julia best practices.
+KIM_API.jl provides a high-level interface that makes it easy to add support for hundreds of validated interatomic models to your simulator. The integration requires minimal code changes and follows Julia best practices.
 
 ## Quick Integration Steps
 
-### 1. Basic Integration Pattern Using highlevel functions provided by KIMJulia.jl
+### 1. Basic Integration Pattern Using highlevel functions provided by KIM_API.jl
 
 Here's the minimal code pattern for adding KIM model support to your simulator:
 
 ```julia
-using KIMJulia
+using KIM_API
 using StaticArrays
 using LinearAlgebra
 
@@ -21,7 +21,7 @@ using LinearAlgebra
 function simulate_system(positions, species, cell, pbc, model_name; timesteps=1000, dt=0.001)
 
     # Initialize KIM model (do this once)
-    kim_model = KIMJulia.KIMModel(model_name)
+    kim_model = KIM_API.KIMModel(model_name)
 
     # Your simulation loop
     for step in 1:timesteps
@@ -68,16 +68,16 @@ For more performant/fine-grained control, you can use the low-level API directly
 Here's how to initialize and use KIM models directly with the low-level interface:
 
 ```julia
-using KIMJulia
+using KIM_API
 
 # 1. Create model with specific units
-model, accepted = KIMJulia.create_model(
-    KIMJulia.zeroBased,  # Use 0-based indexing
-    KIMJulia.A,          # Angstrom
-    KIMJulia.eV,         # Electron volt
-    KIMJulia.e,          # Elementary charge
-    KIMJulia.K,          # Kelvin
-    KIMJulia.ps,         # Picosecond
+model, accepted = KIM_API.create_model(
+    KIM_API.zeroBased,  # Use 0-based indexing
+    KIM_API.A,          # Angstrom
+    KIM_API.eV,         # Electron volt
+    KIM_API.e,          # Elementary charge
+    KIM_API.K,          # Kelvin
+    KIM_API.ps,         # Picosecond
     "SW_StillingerWeber_1985_Si__MO_405512056662_006"
 )
 
@@ -86,11 +86,11 @@ if !accepted
 end
 
 # 2. Create compute arguments
-args = KIMJulia.create_compute_arguments(model)
+args = KIM_API.create_compute_arguments(model)
 
 # 3. Check what the model supports
-energy_support = KIMJulia.get_argument_support_status(args, KIMJulia.partialEnergy)
-forces_support = KIMJulia.get_argument_support_status(args, KIMJulia.partialForces)
+energy_support = KIM_API.get_argument_support_status(args, KIM_API.partialEnergy)
+forces_support = KIM_API.get_argument_support_status(args, KIM_API.partialForces)
 
 # 4. Set up data arrays
 n_atoms = 2
@@ -102,22 +102,22 @@ energy_ref = Ref{Float64}(0.0)
 forces = zeros(Float64, 3, n_atoms)
 
 # 5. Set argument pointers
-KIMJulia.set_argument_pointer!(args, KIMJulia.numberOfParticles, n_ref)
-KIMJulia.set_argument_pointer!(args, KIMJulia.particleSpeciesCodes, species_codes)
-KIMJulia.set_argument_pointer!(args, KIMJulia.coordinates, coords)
-KIMJulia.set_argument_pointer!(args, KIMJulia.particleContributing, contributing)
-KIMJulia.set_argument_pointer!(args, KIMJulia.partialEnergy, energy_ref)
-KIMJulia.set_argument_pointer!(args, KIMJulia.partialForces, forces)
+KIM_API.set_argument_pointer!(args, KIM_API.numberOfParticles, n_ref)
+KIM_API.set_argument_pointer!(args, KIM_API.particleSpeciesCodes, species_codes)
+KIM_API.set_argument_pointer!(args, KIM_API.coordinates, coords)
+KIM_API.set_argument_pointer!(args, KIM_API.particleContributing, contributing)
+KIM_API.set_argument_pointer!(args, KIM_API.partialEnergy, energy_ref)
+KIM_API.set_argument_pointer!(args, KIM_API.partialForces, forces)
 
 # 6. Compute energy and forces
-KIMJulia.compute!(model, args)
+KIM_API.compute!(model, args)
 
 println("Energy: $(energy_ref[]) eV")
 println("Forces: $forces")
 
 # 7. Clean up (optional - handled by finalizers)
-KIMJulia.destroy_compute_arguments!(model, args)
-KIMJulia.destroy_model!(model)
+KIM_API.destroy_compute_arguments!(model, args)
+KIM_API.destroy_model!(model)
 ```
 
 ### Neighbor Lists
@@ -126,27 +126,27 @@ KIM models that require neighbor lists need special handling. Here's how to set 
 
 ```julia
 # Get neighbor list requirements from model
-n_cutoffs, cutoffs, will_not_request = KIMJulia.get_neighbor_list_pointers(model)
+n_cutoffs, cutoffs, will_not_request = KIM_API.get_neighbor_list_pointers(model)
 
 if n_cutoffs > 0
     println("Model requires $n_cutoffs neighbor lists with cutoffs: $cutoffs")
 
     # Create neighbor lists using KIMNeighborList.jl
     nl_handle, all_coords, all_species, contributing, atom_indices =
-        KIMJulia.create_kim_neighborlists(
+        KIM_API.create_kim_neighborlists(
             species, positions, cell, pbc, cutoffs;
             will_not_request_ghost_neigh = will_not_request
         )
 
     # Set up neighbor list callback
     GC.@preserve nl_handle all_coords begin
-        callback_ptr = @cast_as_kim_neigh_fptr(KIMJulia.kim_neighbors_callback)
+        callback_ptr = @cast_as_kim_neigh_fptr(KIM_API.kim_neighbors_callback)
         data_ptr = pointer_from_objref(nl_handle)
-        KIMJulia.set_callback_pointer!(args, KIMJulia.GetNeighborList,
-                                               KIMJulia.c, callback_ptr, data_ptr)
+        KIM_API.set_callback_pointer!(args, KIM_API.GetNeighborList,
+                                               KIM_API.c, callback_ptr, data_ptr)
 
         # Now compute with neighbor lists
-        KIMJulia.compute!(model, args)
+        KIM_API.compute!(model, args)
     end
 end
 ```

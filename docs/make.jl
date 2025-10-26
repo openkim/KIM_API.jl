@@ -1,13 +1,13 @@
-using Documenter, KIMJulia
+using Documenter, KIM_API
 
 # Set up documentation
 makedocs(
-    modules = [KIMJulia],
-    sitename = "KIMJulia.jl",
+    modules = [KIM_API],
+    sitename = "KIM_API.jl",
     authors = "Amit Gupta <gupta839@umn.edu>",
     format = Documenter.HTML(
         prettyurls = get(ENV, "CI", "false") == "true",
-        canonical = "https://ipcamit.github.io/KIMJulia.jl",
+        canonical = "https://ipcamit.github.io/KIM_API.jl",
         assets = String[],
     ),
     pages = [
@@ -28,7 +28,7 @@ makedocs(
         # "Troubleshooting" => "troubleshooting.md",
         # "Developer Guide" => "developer.md"
     ],
-    repo = "https://github.com/ipcamit/KIMJulia.jl/blob/{commit}{path}#L{line}",
+    repo = "https://github.com/ipcamit/KIM_API.jl/blob/{commit}{path}#L{line}",
     clean = true,
     doctest = false,
     linkcheck = false,
@@ -36,7 +36,7 @@ makedocs(
 
 # Deploy documentation
 deploydocs(
-    repo = "github.com/ipcamit/KIMJulia.jl.git",
+    repo = "github.com/ipcamit/KIM_API.jl.git",
     target = "build",
     branch = "gh-pages",
     devbranch = "master",

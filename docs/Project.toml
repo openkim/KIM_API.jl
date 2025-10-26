@@ -1,6 +1,6 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-KIMJulia = "110f5901-8789-45df-852c-04e9fda0ddd7"
+KIM_API = "110f5901-8789-45df-852c-04e9fda0ddd7"
 
 [compat]
 Documenter = "0.27, 1"

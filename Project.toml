@@ -1,4 +1,4 @@
-name = "KIMJulia"
+name = "KIM_API"
 uuid = "00fa7f40-1ac7-4a84-9681-9f177278cec0"
 keywords = ["molecular-dynamics", "kim-api", "interatomic-potentials", "atomistic-simulations"]
 authors = ["Amit Gupta <gupta839@umn.edu>"]
@@ -21,7 +21,7 @@ Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 Molly = "aa0f7f06-fcc0-5ec4-a7f3-a573f33f9c4c"
 
 [extensions]
-KIMJuliaMollyExt = "Molly"
+KIM_APIMollyExt = "Molly"
 
 [compat]
 AtomsBase = "0.5"

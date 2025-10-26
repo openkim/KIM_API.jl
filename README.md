@@ -1,4 +1,4 @@
-# KIMJulia.jl
+# KIM_API.jl
 
 <p align="center">
 <img src="./kimapijl.png" alt="KIM API JL Logo" width="300" />
@@ -8,20 +8,20 @@ Julia interface to the [KIM-API](https:https://kim-api.readthedocs.io) (Knowledg
 This is a low-level interface to the KIM-API, allowing you to access interatomic models directly from Julia.
 Think of it as the Julia equivalent of the KIMPY Python package.
 
-[Documentation](https://openkim.github.io/KIMJulia.jl/)
+[Documentation](https://openkim.github.io/KIM_API.jl/)
 
 ## Installation
 
 For latest version:
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/openkim/KIMJulia.jl")
+Pkg.add(url="https://github.com/openkim/KIM_API.jl")
 ```
 
 For stable version:
 ```julia
 using Pkg
-Pkg.add("KIMJulia")
+Pkg.add("KIM_API")
 ```
 
 > This package was earlier called KIMPortableModels.jl
@@ -37,10 +37,10 @@ export KIM_API_LIB=/path/to/libkim-api.so
 Then, you can use the package as follows:
 
 ```julia
-using KIMJulia, StaticArrays, LinearAlgebra
+using KIM_API, StaticArrays, LinearAlgebra
 
 # Create model function
-model = KIMJulia.KIMModel("SW_StillingerWeber_1985_Si__MO_405512056662_006")
+model = KIM_API.KIMModel("SW_StillingerWeber_1985_Si__MO_405512056662_006")
 
 # Define system
 species = ["Si", "Si"]
@@ -61,12 +61,12 @@ println("Forces: ", results[:forces])
 
 ## Integration with Molly.jl
 
-You can directly use `KIMJulia` calculators as general interactions in Molly.jl simulations:
+You can directly use `KIM_API` calculators as general interactions in Molly.jl simulations:
 
 ```julia
-using Molly, KIMJulia, StaticArrays, Unitful, UnitfulAtomic
+using Molly, KIM_API, StaticArrays, Unitful, UnitfulAtomic
 
-calc = KIMJulia.KIMCalculator("SW_StillingerWeber_1985_Si__MO_405512056662_006";
+calc = KIM_API.KIMCalculator("SW_StillingerWeber_1985_Si__MO_405512056662_006";
                               units=:metal)
 sys = System(atoms = fill(Atom(atom_type="Si", mass=28.0855u"u"), 2),
              coords = [SVector(0.,0.,0.), SVector(3.,0.,0.)] .* u"Å",
@@ -94,7 +94,7 @@ println(forces(sys), potential_energy(sys))
 
 ## Documentation
 
-Full documentation is available at [https://openkim.github.io/KIMJulia.jl/](https://openkim.github.io/KIMJulia.jl/)
+Full documentation is available at [https://openkim.github.io/KIM_API.jl/](https://openkim.github.io/KIM_API.jl/)
 
 ## Testing
 
@@ -102,7 +102,7 @@ Run the test suite with:
 
 ```julia
 using Pkg
-Pkg.test("KIMJulia")
+Pkg.test("KIM_API")
 ```
 
 ## TODO

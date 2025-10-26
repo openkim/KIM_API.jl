@@ -1,6 +1,6 @@
-module KIMJuliaMollyExt
+module KIM_APIMollyExt
 
-using KIMJulia
+using KIM_API
 import AtomsCalculators
 import Molly
 using StaticArrays: SVector
@@ -29,7 +29,7 @@ end
 
 function AtomsCalculators.forces(
     sys::Molly.System,
-    calc::KIMJulia.KIMCalculator;
+    calc::KIM_API.KIMCalculator;
     kwargs...,
 )
     inputs = _kim_inputs(sys)
@@ -49,7 +49,7 @@ end
 function AtomsCalculators.forces!(
     fs,
     sys::Molly.System,
-    calc::KIMJulia.KIMCalculator;
+    calc::KIM_API.KIMCalculator;
     kwargs...,
 )
     inputs = _kim_inputs(sys)
@@ -65,7 +65,7 @@ end
 
 function AtomsCalculators.potential_energy(
     sys::Molly.System,
-    calc::KIMJulia.KIMCalculator;
+    calc::KIM_API.KIMCalculator;
     kwargs...,
 )
     inputs = _kim_inputs(sys)

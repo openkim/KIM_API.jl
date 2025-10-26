@@ -1,13 +1,13 @@
 # Support for Molly.jl
 
-`KIMJulia` provides out of the box extensions compatible with Molly.jl, a molecular dynamics simulation package in Julia.
+`KIM_API` provides out of the box extensions compatible with Molly.jl, a molecular dynamics simulation package in Julia.
 To use KIM models in Molly.jl, you can create a `KIMCalculator` and pass it to the `general_inters` field of a `System`. 
 Here is an example of how to set up and run a molecular dynamics simulation of silicon using the Stillinger-Weber potential from the KIM repository with Molly.jl:
 
 ```julia
 
 using Molly
-using KIMJulia
+using KIM_API
 using StaticArrays
 using Unitful: Å, ustrip
 using UnitfulAtomic
@@ -44,7 +44,7 @@ end
 velocities = zero(coords_) .* (1.0u"ps"^-1)
 boundary = CubicBoundary(repeats[1] * a0)  # 2a0 along each axis
 
-calc = KIMJulia.KIMCalculator(
+calc = KIM_API.KIMCalculator(
     "SW_StillingerWeber_1985_Si__MO_405512056662_006";
     units = :metal,
 )
