@@ -21,7 +21,7 @@ export KIM_API_LIB=${CONDA_PREFIX}/lib/libkim-api.so # for KIM_API.jl to find th
 
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/ipcamit/KIM_API.jl.git")
+Pkg.add(url="https://github.com/openkim/KIM_API.jl.git")
 ```
 
 ### Step 3: Test Installation

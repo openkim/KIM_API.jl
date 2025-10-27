@@ -64,7 +64,7 @@ FOr latest version:
 
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/ipcamit/KIM_API.jl.git")
+Pkg.add(url="https://github.com/openkim/KIM_API.jl.git")
 ```
 
 or
