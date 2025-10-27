@@ -77,5 +77,7 @@ visualize(sys.loggers.coords, boundary, "sim5x5x5.mp4")
 
 ```
 
+![Molly.jl Visualization](./assets/Si_SW_KIM.gif)
+
 Please consult [OpenKIM](https://openkim.org) and [Molly.jl](https://juliamolsim.github.io/Molly.jl/stable/documentation/) documentation for more details on available models and simulation options.
 
