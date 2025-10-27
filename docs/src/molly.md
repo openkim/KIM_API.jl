@@ -48,7 +48,7 @@ calc = KIM_API.KIMCalculator(
     "SW_StillingerWeber_1985_Si__MO_405512056662_006";
     units = :metal,
 )
-ggers=(
+loggers=(
       temp=TemperatureLogger(10),
       coords=CoordinatesLogger(10),
   )
